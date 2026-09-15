@@ -1,1 +1,176 @@
+@layer reset, base, layout, components, utilities;
 
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+}
+
+@layer base {
+  :root {
+    --color-text: #191919;
+    --color-surface: #ffffff;
+    --color-muted: #f7f7f7;
+    --color-accent: #8c1d40;
+    --color-gold: #ffc627;
+
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-fluid: clamp(1.5rem, 4vw, 4rem);
+
+    --radius: 0.5rem;
+  }
+
+  body {
+    color: var(--color-text);
+    background: var(--color-surface);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+  }
+
+  a {
+    color: var(--color-accent);
+  }
+}
+
+@layer layout {
+  .wrapper {
+    inline-size: min(100% - 2rem, 70rem);
+    margin-inline: auto;
+  }
+
+  .section {
+    padding-block: var(--space-fluid);
+  }
+
+  .hero-layout {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-fluid);
+  }
+
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, 16rem), 1fr)
+    );
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  .feature-shell {
+    container-type: inline-size;
+  }
+}
+
+@layer components {
+  .site-header,
+  .site-footer {
+    background: var(--color-muted);
+    padding-block: var(--space-4);
+  }
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero {
+    background: var(--color-muted);
+  }
+
+  .guide-card,
+  .trip-card,
+  .feature-card {
+    border: 1px solid #d0d0d0;
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    background: var(--color-surface);
+  }
+
+  .button {
+    display: inline-block;
+    padding-block: 0.65rem;
+    padding-inline: 1rem;
+    border-radius: var(--radius);
+    background: var(--color-accent);
+    color: var(--color-surface);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .feature-card {
+    container-type: inline-size;
+  }
+
+  .feature-card__body {
+    padding-block-start: var(--space-4);
+  }
+
+  .feature-card__media {
+    min-block-size: 10rem;
+    border-radius: var(--radius);
+    background: linear-gradient(
+      135deg,
+      var(--color-accent),
+      var(--color-gold)
+    );
+  }
+}
+
+@layer utilities {
+  .eyebrow {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+
+/* 
+  Content-driven query:
+  I needed to add this part in the css because the hero's heading, paragraph, and trip card are long, so they need enough
+  inline space to sit next to each other without creating cramped text.
+*/
+@media (min-width: 48rem) {
+  .hero-layout {
+    grid-template-columns:
+      minmax(0, 1.5fr)
+      minmax(16rem, 0.75fr);
+
+    align-items: center;
+  }
+}
+
+@container (min-width: 42rem) {
+  .feature-card {
+    display: grid;
+    grid-template-columns:
+      minmax(12rem, 1fr)
+      minmax(16rem, 1.25fr);
+
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .feature-card__body {
+    padding-block-start: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+  }
+}
